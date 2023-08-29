@@ -5,6 +5,7 @@ import (
 	"user-segments/database"
 	"user-segments/model"
 
+	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
@@ -22,6 +23,8 @@ func loadEnv() {
 }
 
 func main() {
+	router := gin.Default()
+
 	loadEnv()
 	loadDatabase()
 }
