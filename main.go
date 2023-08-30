@@ -38,6 +38,7 @@ func serveApplication() {
 	publicRoutes.DELETE("/users/:username", controller.DeleteUserByUsername)
 	//user_segment part
 	publicRoutes.GET("/user_segments/:id", controller.GetActiveUserSegmentsByUsername)
+	publicRoutes.GET("/user_segments_lite/:id", controller.GetActiveUserSegmentsByUsernameLite)
 	router.Run()
 }
 
