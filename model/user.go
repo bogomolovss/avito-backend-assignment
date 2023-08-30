@@ -12,7 +12,7 @@ import (
 type User struct {
 	gorm.Model
 	Username string    `gorm:"size:255;not null;unique" json:"username"`
-	Segment  []Segment `gorm:"many2many:user_segments;"`
+	Segments []Segment `gorm:"many2many:user_segments;"`
 }
 
 func (user *User) Save() (*User, error) {
@@ -27,4 +27,11 @@ func (user *User) Save() (*User, error) {
 func (user *User) BeforeSave(*gorm.DB) error {
 	user.Username = html.EscapeString(strings.TrimSpace(user.Username))
 	return nil
+}
+
+// Retrieve user list with eager loading segments
+func GetAllUsers(db *gorm.DB) ([]User, error) {
+	var users []User
+	err := db.Model(&User{}).Preload("Segments").Find(&users).Error
+	return users, err
 }
