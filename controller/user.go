@@ -28,15 +28,23 @@ func AddUser(context *gin.Context) {
 func GetAllUsers(context *gin.Context) {
 	var users []model.User
 	database.Database.Find(&users)
+	for i := range users {
+		var segment []model.Segment
+		database.Database.Model(&users[i]).Association("Segments").Find(&segment)
+		users[i].Segments = segment
+	}
 	context.JSON(http.StatusOK, gin.H{"data": users})
 }
 
 func GetUserByUsername(context *gin.Context) {
 	var user model.User
+	var segment []model.Segment
 	if err := database.Database.Where("Username= ?", context.Param("username")).First(&user).Error; err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": "User not found!"})
 		return
 	}
+	database.Database.Model(&user).Association("Segments").Find(&segment)
+	user.Segments = segment
 	context.JSON(http.StatusOK, gin.H{"data": user})
 }
 
