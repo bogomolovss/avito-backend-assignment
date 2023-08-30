@@ -11,8 +11,8 @@ import (
 // `user_segments` is the join table
 type User struct {
 	gorm.Model
-	Username string    `gorm:"size:255;not null;unique" json:"username"`
-	Segments []Segment `gorm:"many2many:user_segments;"`
+	Username string     `gorm:"size:255;not null;unique" json:"username"`
+	Segments []*Segment `gorm:"many2many:user_segments;"`
 }
 
 func (user *User) Save() (*User, error) {

@@ -29,16 +29,23 @@ func AddSegment(context *gin.Context) {
 func GetAllSegments(context *gin.Context) {
 	var segments []model.Segment
 	database.Database.Find(&segments)
+	for i := range segments {
+		var user []*model.User
+		database.Database.Model(&segments[i]).Association("Users").Find(&user)
+		segments[i].Users = user
+	}
 	context.JSON(http.StatusOK, gin.H{"data": segments})
 }
 
 func GetSegmentByTitle(context *gin.Context) {
 	var segment model.Segment
-
+	var user []*model.User
 	if err := database.Database.Where("Title = ?", context.Param("title")).First(&segment).Error; err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": "Segment not found!"})
 		return
 	}
+	database.Database.Model(&segment).Association("Users").Find(&user)
+	segment.Users = user
 	context.JSON(http.StatusOK, gin.H{"data": segment})
 }
 
