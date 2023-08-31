@@ -8,19 +8,27 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// func AddUserToSegment(context *gin.Context) {
-// 	var user model.User
-// 	var segment []model.Segment
-// 	if err := database.Database.Where("Username= ?", context.Param("username")).First(&user).Error; err != nil {
-// 		context.JSON(http.StatusBadRequest, gin.H{"error": "User not found!"})
-// 		return
-// 	}
-// 	database.Database.Model(&user).Association("Segments").Find(&segment)
-// 	context.JSON(http.StatusOK, gin.H{"data": segment})
-// }
-
 type SegmentLite struct {
-	Title string
+	Title string `json:"title" binding:"required,max=255"`
+}
+
+func AddUserToSegments(context *gin.Context) {
+	var user model.User
+	var segments []*SegmentLite
+	if err := database.Database.Where("id= ?", context.Param("id")).First(&user).Error; err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": "User not found!"})
+		return
+	}
+	if err := context.ShouldBindJSON(&segments); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": "Bad request!"})
+		return
+	}
+	for i := range segments {
+		var segment model.Segment
+		database.Database.Where("Title= ?", &segments[i].Title).First(&segment)
+		database.Database.Model(&user).Association("Segments").Append(&segment)
+	}
+	context.JSON(http.StatusOK, gin.H{"data": user})
 }
 
 func GetActiveUserSegmentsByUsername(context *gin.Context) {

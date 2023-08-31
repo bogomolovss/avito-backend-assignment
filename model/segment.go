@@ -8,7 +8,7 @@ import (
 
 type Segment struct {
 	gorm.Model
-	Title string  `gorm:"type:text" json:"title"`
+	Title string  `gorm:"type:text;unique" json:"title"`
 	Users []*User `gorm:"many2many:user_segments;"`
 }
 
