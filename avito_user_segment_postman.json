@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "8713bc47-9c09-4b86-8338-2c5c6f0202d9",
+		"name": "Avito user-segment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "24379925"
+	},
+	"item": [
+		{
+			"name": "get users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/users"
+			},
+			"response": []
+		},
+		{
+			"name": "get user by name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/users/Diman"
+			},
+			"response": []
+		},
+		{
+			"name": "get segments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/segments"
+			},
+			"response": []
+		},
+		{
+			"name": "get segment by title",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/segments/AVITO_DISCOUNT_50"
+			},
+			"response": []
+		},
+		{
+			"name": "delete segment by title",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/api/segments/AVITO_DISCOUNT_50"
+			},
+			"response": []
+		},
+		{
+			"name": "delete user by username",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/api/users/Dima"
+			},
+			"response": []
+		},
+		{
+			"name": "get user segments by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/user_segments/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Add segments to user by user ID",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\"title\": \"AVITO_DISCOUNT_90\"},\n    {\"title\": \"AVITO_MESSAGE_100\"}\n]\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/user_segments/1"
+			},
+			"response": []
+		},
+		{
+			"name": "get user segments by ID / LITE",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/user_segments_lite/1"
+			},
+			"response": []
+		},
+		{
+			"name": "post user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"Diman\",\n    \"Segments\": [{\"id\": 1}, {\"id\": 2}, {\"id\": 3}]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/users"
+			},
+			"response": []
+		},
+		{
+			"name": "post segment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"AVITO_MESSAGE_100\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/segments"
+			},
+			"response": []
+		}
+	]
+}
